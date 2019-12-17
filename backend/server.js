@@ -1,26 +1,22 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const getFromDatabase = require('./getFromDatabase');
+const { getAllBooksQuery } = require('./databaseQueries');
 
 const port = process.env.PORT || 5000;
 
 // Serve static files from the React app
 app.use(express.static('frontend/build'));
 
-// // Put all API endpoints under '/api'
-// app.get('/api/passwords', (req, res) => {
-//   const count = 5;
-
-//   // Generate some passwords
-//   const passwords = Array.from(Array(count).keys()).map(i =>
-//     generatePassword(12, false)
-//   )
-
-//   // Return them as json
-//   res.json(passwords);
-
-//   console.log(`Sent ${count} passwords`);
-// });
+// Put all API endpoints under '/api'
+app.get('/api/get-books', (req, res) => {
+  getFromDatabase(getAllBooksQuery)
+    .then(data => {
+      // Return them as json
+      res.json(data)
+    });
+});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
