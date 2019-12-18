@@ -17,9 +17,13 @@ const StyledLink = styled(Link)`
   display: block;
   box-sizing: border-box;
   text-decoration: none;
+  max-width: 384px;
 `;
 
 const ContentWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   width: 100%;
 `;
 

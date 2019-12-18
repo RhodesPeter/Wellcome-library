@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Back from '../components/Back';
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -29,11 +30,13 @@ const ListItem = styled.li`
   text-align: left;
   list-style: none;
   margin: 8px;
+  min-height: 180px;
 `;
 
 const AllBooks = (props) => {
   return (
     <ContentWrapper>
+      <Back />
       <TitleWrapper>
         <PageTitle>View all books</PageTitle>
       </TitleWrapper>
