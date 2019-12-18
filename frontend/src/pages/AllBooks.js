@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Back from '../components/Back';
+import BookList from '../components/BookList';
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -18,21 +19,6 @@ const TitleWrapper = styled.div`
   border-style: solid;
 `;
 
-const ListWrapper = styled.ul`
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`;
-
-const ListItem = styled.li`
-  text-align: left;
-  list-style: none;
-  margin: 8px;
-  min-height: 180px;
-`;
-
 const AllBooks = (props) => {
   return (
     <ContentWrapper>
@@ -40,16 +26,7 @@ const AllBooks = (props) => {
       <TitleWrapper>
         <PageTitle>View all books</PageTitle>
       </TitleWrapper>
-      <ListWrapper>
-        {props.books.map(item => (
-          <ListItem key={item.id}>
-            { item.ISBN
-              ? <img alt={item.Title} src={`http://covers.openlibrary.org/b/isbn/${item.ISBN}-M.jpg`} />
-              : <img alt={item.Title} src="http://i.imgur.com/sJ3CT4V.gif" />
-            }
-          </ ListItem>
-        ))}
-      </ListWrapper>
+      <BookList books={props.books}/>
     </ContentWrapper>
   );
 };

@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import searchBooks from '../scrips/searchBooks';
-import ResultsList from './ResultsList';
+import BookList from '../components/BookList';
+import VisuallyHiddenSpan from '../components/VisuallyHiddenSpan';
+
+const InputWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
 
 const SearchInput = styled.input`
   background-color: white;
-  padding: 8px 8px 8px 32px;
+  padding: 8px 24px 8px 32px;
   border-width: 0 0 2px 0;
   border-color: #006200;
   border-style: solid;
@@ -24,20 +30,47 @@ const SearchInput = styled.input`
   }
 `;
 
+const ClearSearch = styled.button`
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23292929' fill-rule='nonzero'%3E%3Cpath d='M.63 3.943A2.345 2.345 0 0 1 3.955.641l19.358 19.345a2.345 2.345 0 0 1-1.643 4.001 2.284 2.284 0 0 1-1.684-.675L.629 3.943z'/%3E%3Cpath d='M.177 22.55A2.343 2.343 0 0 1 .7 19.984L20.057.63a2.345 2.345 0 0 1 3.302 3.326L4.014 23.312c-.44.44-1.035.687-1.656.688a2.345 2.345 0 0 1-2.18-1.45z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: white;
+  border: 0;
+  right: 0;
+  position: absolute;
+  top: 15px;
+`;
+
 const Search = (props) => {
   const [value, setValue] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
   const handleChange = event => {
     setValue(event.target.value);
-    setSearchResults(searchBooks(props.books));
+    setSearchResults(searchBooks(props.books, event.target.value));
+
+    if (event.target.value.length === 0){
+      handleClear();
+    }
+  };
+
+  const handleClear = () => {
+    setSearchResults([]);
+    setValue('');
   };
 
   return (
     <div>
-      <SearchInput value={value} onChange={handleChange} type="text" placeholder="Search books" />
+      <InputWrapper>
+        <SearchInput value={value} onChange={handleChange} type="text" placeholder="Search books" />
+        {
+          value.length > 0 && <ClearSearch onClick={handleClear}><VisuallyHiddenSpan text="Clear search" /></ClearSearch>
+        }
+      </InputWrapper>
       {
-        searchResults && searchResults.length > 0 && <ResultsList results={searchResults} />
+        searchResults && searchResults.length > 0 && <BookList books={searchResults} />
       }
     </div>
   );
