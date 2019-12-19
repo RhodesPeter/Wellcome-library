@@ -67,7 +67,7 @@ const BookDetails = (props) => {
         <Author>{book.Author}</Author>
         <Isbn>{book.ISBN}</Isbn>
       </ImageContainer>
-      <LoanSlider isLoaned={isLoaned} holder={holder} />
+      <LoanSlider isLoaned={isLoaned} holder={holder} location={book.Location} />
       {
         isLoaned
           ? <Return updateLoanValue={setLoanValue} updateLoanHolder={setLoanHolder} bookId={bookId} bookLocation={book.Location} />

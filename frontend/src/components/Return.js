@@ -21,8 +21,6 @@ const ConfirmButton = styled.button`
 `;
 
 const Return = (props) => {
-  console.log(props);
-
   const handleClick = () => {
     returnBook(props.bookId)
       .then(() => {

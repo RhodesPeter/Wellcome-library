@@ -48,7 +48,9 @@ const LoanSlider = (props) => {
         <SliderText>{props.isLoaned ? 'On loan' : 'Available' }</SliderText>
       </Slider>
       {
-        props.holder && <Owner>Currently with {props.holder}</Owner>
+        props.holder
+          ? <Owner>Currently with {props.holder}</Owner>
+          : <Owner>Located on the {props.location} bookshelf</Owner>
       }
     </Availability>
   );
