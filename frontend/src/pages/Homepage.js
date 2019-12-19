@@ -36,6 +36,7 @@ const ButtonWrapper = styled.div`
 const Homepage = (props) => {
   const [softwareBooks, setSoftwareBooks] = useState([]);
   const [designBooks, setDesignBooks] = useState([]);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   useEffect(() => {
     getBooksByCategory('Technology, software and data')
@@ -49,12 +50,17 @@ const Homepage = (props) => {
 
   return (
     <ContentWrapper>
-      <Search books={props.books} />
-      <HorizontalBookList title="Software and data" books={softwareBooks} />
-      <HorizontalBookList title="Design, content and research" books={designBooks} />
-      <ButtonWrapper>
-        <StyledLink to="/all-books">View all books</StyledLink>
-      </ButtonWrapper>
+      <Search setSearchStatus={setIsSearchActive} books={props.books} />
+      {
+        !isSearchActive ?
+          <>
+            <HorizontalBookList title="Software and data" books={softwareBooks} />
+            <HorizontalBookList title="Design, content and research" books={designBooks} />
+            <ButtonWrapper>
+              <StyledLink to="/all-books">View all books</StyledLink>
+            </ButtonWrapper>
+          </> : ''
+      }
     </ContentWrapper>
   );
 };

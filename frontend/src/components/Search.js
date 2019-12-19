@@ -50,6 +50,7 @@ const Search = (props) => {
   const handleChange = event => {
     setValue(event.target.value);
     setSearchResults(searchBooks(props.books, event.target.value));
+    props.setSearchStatus(true);
 
     if (event.target.value.length === 0){
       handleClear();
@@ -59,6 +60,7 @@ const Search = (props) => {
   const handleClear = () => {
     setSearchResults([]);
     setValue('');
+    props.setSearchStatus(false);
   };
 
   return (

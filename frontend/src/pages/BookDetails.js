@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Back from '../components/Back';
 import findBookById from '../scrips/findBookById';
 import { Link } from 'react-router-dom';
 import LoanSlider from '../components/LoanSlider';
+import ConfirmName from '../components/ConfirmName';
+import Return from '../components/Return';
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -42,50 +44,16 @@ const Isbn = styled.p`
   font-size: 12px;
 `;
 
-const ConfirmName = styled.div`
-  background-color: #f2f2f2;
-  padding: 32px 16px 48px;
-`;
-
-const ConfirmForm = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ConfirmButton = styled.button`
-  background-color: #236126;
-  color: white;
-  border-radius: 4px;
-  border: 0;
-  padding: 16px;
-  font-size: 24px;
-  line-height: 18px;
-  margin-top: 32px;
-  font-weight: bold;
-`;
-
-const CancelButton = styled.button`
-  background-color: white;
-  border-radius: 4px;
-  border: 0;
-  padding: 16px;
-  font-size: 24px;
-  line-height: 18px;
-  margin-top: 32px;
-  font-weight: bold;
-`;
-
-const ConfirmLabel = styled.label`
-  text-align: left;
-  font-size: 24px;
-  line-height: 26px;
-  margin-bottom: 8px;
-  font-family: helvetica;
-`;
-
 const BookDetails = (props) => {
   const bookId = props.match.params[0];
   const book = findBookById(props.books, bookId)[0]||{};
+  const [isLoaned, setLoanValue] = useState();
+  const [holder, setLoanHolder] = useState();
+
+  if (props.books.length > 0 && holder === undefined) {
+    setLoanValue(isLoaned || book['On_loan']);
+    setLoanHolder(holder || book.holder);
+  }
 
   return (
     <ContentWrapper>
@@ -99,15 +67,12 @@ const BookDetails = (props) => {
         <Author>{book.Author}</Author>
         <Isbn>{book.ISBN}</Isbn>
       </ImageContainer>
-      <LoanSlider { ...book } />
-      <ConfirmName>
-        <ConfirmForm>
-          <ConfirmLabel>Confirm your name</ConfirmLabel>
-          <input type="text"></input>
-          <ConfirmButton>Loan book</ConfirmButton>
-          <CancelButton>Cancel</CancelButton>
-        </ConfirmForm>
-      </ConfirmName>
+      <LoanSlider isLoaned={isLoaned} holder={holder} />
+      {
+        isLoaned
+          ? <Return updateLoanValue={setLoanValue} updateLoanHolder={setLoanHolder} bookId={bookId} bookLocation={book.Location} />
+          : <ConfirmName updateLoanValue={setLoanValue} updateLoanHolder={setLoanHolder} bookId={bookId} />
+      }
       <EditWrapper>
         <EditLink to={`${bookId}/edit`}>Edit book</EditLink>
       </EditWrapper>

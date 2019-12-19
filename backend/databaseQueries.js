@@ -9,10 +9,28 @@ const getBooksByCategory = (categoryTitle) => {
     JOIN category c ON bc.category_id = c.id
     WHERE c.category = "${categoryTitle}";
   `
-}
+};
+
+const updateLoanInfo = (bookId, name) => {
+  return `
+    UPDATE books
+    SET On_loan = 1, holder = "${name}"
+    WHERE id = ${bookId};
+  `
+};
+
+const deleteLoanInfo = (bookId) => {
+  return `
+    UPDATE books
+    SET On_loan = 0, holder = NULL
+    WHERE id = ${bookId};
+  `;
+};
 
 module.exports = {
   getAllBooksQuery,
   getAllTitlesQuery,
-  getBooksByCategory
+  getBooksByCategory,
+  updateLoanInfo,
+  deleteLoanInfo
 }

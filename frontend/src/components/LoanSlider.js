@@ -8,14 +8,14 @@ const Availability = styled.div`
 `;
 
 const Slider = styled.div`
-  padding: ${props => props.loaned.On_loan === 1 ? "6px 0 6px 6px" : "6px 6px 6px 0"};
-  background-color: ${props => props.loaned.On_loan === 1 ? "#e10f2d" : "#236126"};
+  padding: ${props => props.loaned ? "6px 0 6px 6px" : "6px 6px 6px 0"};
+  background-color: ${props => props.loaned ? "#e10f2d" : "#236126"};
   border-radius: 4px;
   width: 188px;
   margin: 0 auto;
   display: flex;
-  flex-direction: ${props => props.loaned.On_loan === 1 ? "row" : "row-reverse"};
-  justify-content: ${props => props.loaned.On_loan === 1 ? "flex-start" : "flex-end"};
+  flex-direction: ${props => props.loaned ? "row" : "row-reverse"};
+  justify-content: ${props => props.loaned ? "flex-start" : "flex-end"};
 `;
 
 const Thumb = styled.div`
@@ -43,9 +43,9 @@ const Owner = styled.p`
 const LoanSlider = (props) => {
   return (
     <Availability>
-      <Slider loaned={props} >
+      <Slider loaned={props.isLoaned} >
         <Thumb />
-        <SliderText>{props['On_loan'] ? 'On loan' : 'Available' }</SliderText>
+        <SliderText>{props.isLoaned ? 'On loan' : 'Available' }</SliderText>
       </Slider>
       {
         props.holder && <Owner>Currently with {props.holder}</Owner>

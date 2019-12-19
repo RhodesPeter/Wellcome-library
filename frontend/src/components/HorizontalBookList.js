@@ -39,7 +39,7 @@ const HorizontalBookList = (props) => {
       <Title>{ props.title }</Title>
       <ListWrapper>
         {props.books.map(item => (
-          <Link key={item.book_id} to={`/books/${item.id}`}>
+          <Link key={item.book_id} to={`/books/${item.book_id}`}>
             <ListItem>
               {item.ISBN
                 ? <img alt={item.Title} src={`http://covers.openlibrary.org/b/isbn/${item.ISBN}-M.jpg`} />
