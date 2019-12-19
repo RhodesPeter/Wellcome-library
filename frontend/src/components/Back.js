@@ -11,6 +11,8 @@ const BackButton = styled(Link)`
   height: 24px;
   position: absolute;
   top: 20px;
+  background-position: left center;
+  left: 8px;
 `;
 
 const Back = (props) => {

@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const getFromDatabase = require('./getFromDatabase');
-const { getAllBooksQuery } = require('./databaseQueries');
+const { getAllBooksQuery, getBooksByCategory } = require('./databaseQueries');
 
 const port = process.env.PORT || 5000;
 
@@ -17,6 +17,14 @@ app.get('/api/get-books', (req, res) => {
       res.json(data)
     });
 });
+
+app.get('/api/get-books-by-category/:category', (req, res) => {
+  getFromDatabase(getBooksByCategory(req.params.category))
+    .then(data => {
+      res.json(data)
+    });
+});
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

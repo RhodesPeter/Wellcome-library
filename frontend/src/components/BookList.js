@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const ListWrapper = styled.ul`
   padding: 0;
@@ -21,10 +22,12 @@ const BookList = (props) => {
     <ListWrapper>
       {props.books.map(item => (
         <ListItem key={item.id}>
-          {item.ISBN
-            ? <img alt={item.Title} src={`http://covers.openlibrary.org/b/isbn/${item.ISBN}-M.jpg`} />
-            : <img alt={item.Title} src="http://i.imgur.com/sJ3CT4V.gif" />
-          }
+          <Link to={`/books/${item.id}`}>
+            {item.ISBN
+              ? <img alt={item.Title} src={`http://covers.openlibrary.org/b/isbn/${item.ISBN}-M.jpg`} />
+              : <img alt={item.Title} src="http://i.imgur.com/sJ3CT4V.gif" />
+            }
+          </Link>
         </ ListItem>
       ))}
     </ListWrapper>

@@ -15,8 +15,9 @@ const PageTitle = styled.h1`
 const TitleWrapper = styled.div`
   padding: 0 0 32px;
   border-width: 0 0 2px 0;
-  border-color: #006200;
+  border-color: #236126;
   border-style: solid;
+  margin: 0 16px;
 `;
 
 const AllBooks = (props) => {
